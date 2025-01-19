@@ -6,8 +6,24 @@ import org.junit.jupiter.api.Test;
 public class SquareTests {
 
     @Test
-    void canCalculateArea() {
-        double result = Square.squareArea(5.0);
+    void canCalculateAreaSquare() {
+        var s = new Square(5.0);
+        double result = s.area();
         Assertions.assertEquals(25.0, result);
+    }
+
+    @Test
+    void canCalculatePerimeterSquare() {
+        Assertions.assertEquals(20.0, new Square(5.0).perimeter());
+    }
+
+    @Test
+    void canCalculatePerimeterTriangle() {
+        Assertions.assertEquals(15.0, new Triangle(5.0, 5.0, 5.0).perimeter());
+    }
+
+    @Test
+    void canCalculateAreaTriangle() {
+        Assertions.assertEquals(10.825317547305483, new Triangle(5.0, 5.0, 5.0).area());
     }
 }
