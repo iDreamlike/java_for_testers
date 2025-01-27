@@ -44,8 +44,8 @@ public class TriangleTests {
 
     @Test
     void testEquality2() {
-        var r1 = new Triangle(3.0, 4.0, 5.0);
-        var r2 = new Triangle(5.0, 4.0, 3.0);
+        var r1 = new Triangle(2.0, 3.0, 4.0);
+        var r2 = new Triangle(3.0, 4.0, 2.0);
         Assertions.assertEquals(r1, r2);
     }
 }
