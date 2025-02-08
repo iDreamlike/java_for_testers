@@ -11,6 +11,5 @@ public class GroupModificationTests extends TestBase {
             app.groups().createGroup(new GroupData("group name", "group header", "group footer"));
         }
         app.groups().modifyGroup(new GroupData().withName("modified name"));
-//        app.groups().modifyGroup(new GroupData().withFooter("Modified Footer"));
     }
 }

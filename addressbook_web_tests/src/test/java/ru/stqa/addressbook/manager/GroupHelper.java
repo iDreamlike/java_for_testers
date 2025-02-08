@@ -44,12 +44,30 @@ public class GroupHelper extends HelperBase {
         returnToGroupsPage();
     }
     
+    private void initGroupCreation() {
+        click(By.name("new"));
+    }
+
+    private void initGroupModification() {
+        click(By.name("edit"));
+    }
+
+    private void fillGroupForm(GroupData group) {
+        type(By.name("group_name"), group.name());
+        type(By.name("group_header"), group.header());
+        type(By.name("group_footer"), group.footer());
+    }
+
     private void submitGroupCreation() {
         click(By.name("submit"));
     }
 
-    private void initGroupCreation() {
-        click(By.name("new"));
+    private void submitGroupModification() {
+        click(By.name("update"));
+    }
+
+    private void selectGroup() {
+        click(By.name("selected[]"));
     }
 
     private void removeSelectedGroup() {
@@ -59,23 +77,4 @@ public class GroupHelper extends HelperBase {
     private void returnToGroupsPage() {
         click(By.linkText("groups"));
     }
-
-    private void submitGroupModification() {
-        click(By.name("update"));
-    }
-
-    private void fillGroupForm(GroupData group) {
-        type(By.name("group_name"), group.name());
-        type(By.name("group_header"), group.header());
-        type(By.name("group_footer"), group.footer());
-    }
-
-    private void initGroupModification() {
-        click(By.name("edit"));
-    }
-
-    private void selectGroup() {
-        click(By.name("selected[]"));
-    }
-
 }
