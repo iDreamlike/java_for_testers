@@ -3,6 +3,9 @@ package ru.stqa.addressbook.manager;
 import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GroupHelper extends HelperBase {
 
     public GroupHelper(ApplicationManager manager) {
@@ -89,5 +92,11 @@ public class GroupHelper extends HelperBase {
         for (var checkbox : checkboxes) {
             checkbox.click();
         }
+    }
+
+    public List<GroupData> getList() {
+        var groups = new ArrayList<GroupData>();
+
+        return groups;
     }
 }
