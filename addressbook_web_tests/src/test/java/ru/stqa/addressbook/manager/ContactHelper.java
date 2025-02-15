@@ -2,9 +2,9 @@ package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.ContactData;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ContactHelper extends HelperBase {
 
@@ -65,6 +65,18 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector(String.format("input[id='%s']", contact.id())));
     }
 
+    private void editContact(ContactData contact) {
+        var rows = manager.driver.findElements(By.name("entry"));
+        for (var row : rows) {
+            var checkbox = row.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("id");
+            if (Objects.equals(id, contact.id())) {
+                row.findElement(By.cssSelector("td:nth-child(8)")).click();
+                break;
+            }
+        }
+    }
+
     private void removeSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
     }
@@ -102,21 +114,17 @@ public class ContactHelper extends HelperBase {
                     .withLastName(lastname));
         }
         return contacts;
+    }
 
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openContactsPage();
+        editContact(contact);
+        fillContactForm(modifiedContact);
+        submitContactUpdate();
+        openContactsPage();
+    }
 
-
-
-//        openHomePage();
-//        var users = new ArrayList<UserData>();
-//        var trs = manager.driver.findElements(By.name("entry"));
-//        for (var tr : trs) {
-//            var firstname = tr.findElement(By.cssSelector("td:nth-child(3)")).getText();
-//            //(By.xpath(".//td[3]")).getText();
-//            var lastname = tr.findElement(By.cssSelector("td:nth-child(2)")).getText();
-//            var checkbox = tr.findElement(By.name("selected[]"));
-//            var id = checkbox.getAttribute("value");
-//            users.add(new UserData().withId(id).withFirstName(firstname).withLastName(lastname));
-//        }
-//        return users;
+    private void submitContactUpdate() {
+        click(By.name("update"));
     }
 }

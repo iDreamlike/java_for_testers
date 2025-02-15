@@ -3,9 +3,7 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Assertions;
 import ru.stqa.addressbook.model.GroupData;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 
