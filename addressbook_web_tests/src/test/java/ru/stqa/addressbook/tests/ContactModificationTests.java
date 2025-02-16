@@ -15,7 +15,8 @@ public class ContactModificationTests extends TestBase {
            app.contacts().createContact(new ContactData("",
                    "First Name",
                    "Middle Name",
-                   "Last Name"));
+                   "Last Name",
+                   "src/test/resources/images/avatar.png"));
        }
        var oldContacts = app.contacts().getList();
        var rnd = new Random();
@@ -23,7 +24,8 @@ public class ContactModificationTests extends TestBase {
        var testData = new ContactData()
                .withFirstName("modified first name")
                .withMiddleName("modified middle name")
-               .withLastName("modified last name");
+               .withLastName("modified last name")
+               .withPhoto("src/test/resources/images/avatar.png");
        app.contacts().modifyContact(oldContacts.get(index), testData);
        var newContacts = app.contacts().getList();
        var expectedList = new ArrayList<>(oldContacts);
