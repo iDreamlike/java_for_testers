@@ -17,12 +17,12 @@ public class ContactCreationTests extends TestBase {
         for (var firstName : List.of("", "first name")) {
             for (var middleName : List.of("", "middle name")) {
                 for (var lastName : List.of("", "last name")) {
-                    result.add(new ContactData("", firstName, middleName, lastName, "src/test/resources/images/avatar.png"));
+                    result.add(new ContactData("", firstName, middleName, lastName, randomFile("src/test/resources/images")));
                 }
             }
         }
         for (int i = 0; i<5; i++) {
-            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), "src/test/resources/images/avatar.png"));
+            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomFile("src/test/resources/images")));
         }
         return result;
     }
@@ -39,9 +39,7 @@ public class ContactCreationTests extends TestBase {
         newContacts.sort(compareById);
 
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id())
-                .withMiddleName("")
-                .withPhoto("src/test/resources/images/avatar.png"));
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
@@ -65,7 +63,7 @@ public class ContactCreationTests extends TestBase {
         var contact = new ContactData()
                 .withFirstName(randomString(10))
                 .withLastName(randomString(10))
-                .withPhoto("src/test/resources/images/avatar.png");
+                .withPhoto(randomFile("src/test/resources/images"));
         app.contacts().createContact(contact);
     }
 }
