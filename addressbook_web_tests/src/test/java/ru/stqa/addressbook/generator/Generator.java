@@ -2,6 +2,7 @@ package ru.stqa.addressbook.generator;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.model.GroupData;
 
@@ -65,6 +66,7 @@ public class Generator {
     }
 
     private void save(Object data) {
-
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File("result.json"), myResultObject);
     }
 }
