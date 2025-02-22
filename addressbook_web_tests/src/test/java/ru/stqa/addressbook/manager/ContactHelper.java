@@ -113,7 +113,7 @@ public class ContactHelper extends HelperBase {
                     .withId(id)
                     .withFirstName(firstname)
                     .withLastName(lastname)
-                    .withPhoto("src/test/resources/images/avatar.png"));
+                    .withPhoto("src/test/resources/images/kid.png"));
         }
         return contacts;
     }
