@@ -14,6 +14,7 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper groups;
     private ContactHelper contacts;
+    private JdbcHelper jdbc;
     private Properties properties;
 
     public void init(String browser, Properties properties) {
@@ -52,6 +53,13 @@ public class ApplicationManager {
             contacts = new ContactHelper(this);
         }
         return contacts;
+    }
+
+    public JdbcHelper jdbc() {
+        if (jdbc == null) {
+            jdbc = new JdbcHelper(this);
+        }
+        return jdbc;
     }
 
     public void acceptAlert() {
