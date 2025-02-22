@@ -31,7 +31,7 @@ public class ContactCreationTests extends TestBase {
             result.add(new ContactData("", CommonFunctions.randomString(i * 10), CommonFunctions.randomString(i * 10), CommonFunctions.randomString(i * 10), randomFile("src/test/resources/images")));
         }*/
         var mapper = new YAMLMapper();
-        var value = mapper.readValue(new File("contacts.yml"), new TypeReference<List<ContactData>>() {});
+        var value = mapper.readValue(new File("contacts.yaml"), new TypeReference<List<ContactData>>() {});
         result.addAll(value);
         return result;
     }
