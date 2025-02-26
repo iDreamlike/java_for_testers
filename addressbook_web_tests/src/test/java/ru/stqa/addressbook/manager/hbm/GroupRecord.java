@@ -21,7 +21,7 @@ public class GroupRecord {
     @Column(name = "group_footer")
     public String footer;
 
-    public Date deprecated = new Date();
+    public String deprecated = "0000-00-00 00:00:00";
 
     public GroupRecord() {
     }
