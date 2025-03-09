@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,14 +11,18 @@ public class ContactRemovalTests extends TestBase {
 
     @Test
     public void canRemoveContact() {
-        if (!app.contacts().isContactPresent()) {
-            app.contacts().create(new ContactData("", "Федя", "", "", "", "src/test/resources/images/kid.png"));
+        if (app.hbm().getContactCount() == 0) {
+            app.contacts().create(new ContactData("",
+                    "firstname",
+                    "middlename",
+                    "lastname",
+                    "address"));
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
         app.contacts().removeContact(oldContacts.get(index));
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.remove(index);
         Assertions.assertEquals(newContacts, expectedList);
@@ -34,10 +37,14 @@ public class ContactRemovalTests extends TestBase {
 
     @Test
     void canRemoveAllContactsAtOnce() {
-        if (app.contacts().getCount() == 0) {
-            app.contacts().create(new ContactData("", "first name", "middle name", "last name", "address", ""));
+        if (app.hbm().getContactCount() == 0) {
+            app.contacts().create(new ContactData("",
+                    "first name",
+                    "middle name",
+                    "last name",
+                    "address"));
         }
         app.contacts().removeAllContacts();
-        Assertions.assertEquals(0, app.contacts().getCount());
+        Assertions.assertEquals(0, app.hbm().getContactCount());
     }
 }

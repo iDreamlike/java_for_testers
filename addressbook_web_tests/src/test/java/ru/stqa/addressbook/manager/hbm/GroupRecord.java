@@ -1,8 +1,6 @@
 package ru.stqa.addressbook.manager.hbm;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
 import java.util.List;
 
 @Entity

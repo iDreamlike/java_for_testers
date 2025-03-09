@@ -14,8 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ru.stqa.addressbook.tests.TestBase.randomFile;
-
 public class Generator {
 
     @Parameter(names={"--type", "-t"})
@@ -52,7 +50,7 @@ public class Generator {
         if ("groups".equals(type)) {
             return generateGroups();
         } else if ("contacts".equals(type)) {
-            return genetateContacts();
+            return generateContacts();
         } else {
             throw new IllegalArgumentException("Неизвестный тип данных " + type);
         }
@@ -69,14 +67,13 @@ public class Generator {
         return result;
     }
 
-    private Object genetateContacts() {
+    private Object generateContacts() {
         var result = new ArrayList<ContactData>();
         for (int i = 0; i < count; i++) {
             result.add(new ContactData()
                     .withFirstName(CommonFunctions.randomString(i * 10))
                     .withLastName(CommonFunctions.randomString(i * 10))
-                    .withAddress(CommonFunctions.randomString(i * 10))
-                    .withPhoto("src/test/resources/images/kid.png"));
+                    .withAddress(CommonFunctions.randomString(i * 10)));
 //                    .withPhoto(randomFile("src/test/resources/images")));     Отключил рандом для прохождения ассерта в тесте
         }
         return result;

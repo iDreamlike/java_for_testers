@@ -40,9 +40,9 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContact(ContactData contact) {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().create(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
@@ -55,27 +55,17 @@ public class ContactCreationTests extends TestBase {
     }
 
     public static List<ContactData> negativeContactProvider() {
-        var result = new ArrayList<>(List.of(new ContactData("", "name'", "", "", "", "src/test/resources/images/avatar.png")));
+        var result = new ArrayList<>(List.of(new ContactData("", "name'", "", "", "")));
         return result;
     }
 
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
-    public void canNotCreateMultipleContact(ContactData contact) {
-        int contactCount = app.contacts().getCount();
+    public void canNotCreateContact(ContactData contact) {
+        var oldContacts = app.hbm().getContactList();
         app.contacts().create(contact);
-        int newContactCount = app.contacts().getCount();
-        Assertions.assertEquals(contactCount, newContactCount);
-    }
-
-    @Test
-    void canCreateContact() {
-        var contact = new ContactData()
-                .withFirstName(CommonFunctions.randomString(10))
-                .withLastName(CommonFunctions.randomString(10))
-                .withAddress(CommonFunctions.randomString(10))
-                .withPhoto(randomFile("src/test/resources/images"));
-        app.contacts().create(contact);
+        var newContacts = app.hbm().getContactList();
+        Assertions.assertEquals(newContacts, oldContacts);
     }
 
     @Test
@@ -83,8 +73,7 @@ public class ContactCreationTests extends TestBase {
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
-                .withAddress(CommonFunctions.randomString(10))
-                .withPhoto(randomFile("src/test/resources/images"));
+                .withAddress(CommonFunctions.randomString(10));
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
         }

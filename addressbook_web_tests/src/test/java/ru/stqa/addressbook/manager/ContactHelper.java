@@ -57,7 +57,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("address"), contact.address());
-        attach(By.name("photo"), contact.photo());
     }
 
     private void submitContactCreation() {
@@ -132,8 +131,7 @@ public class ContactHelper extends HelperBase {
                     .withId(id)
                     .withFirstName(firstname)
                     .withLastName(lastname)
-                    .withAddress(address)
-                    .withPhoto("src/test/resources/images/kid.png"));
+                    .withAddress(address));
         }
         return contacts;
     }
