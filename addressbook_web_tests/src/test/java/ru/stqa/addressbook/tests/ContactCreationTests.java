@@ -75,10 +75,12 @@ public class ContactCreationTests extends TestBase {
                 .withLastName(CommonFunctions.randomString(10))
                 .withAddress(CommonFunctions.randomString(10));
         if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+            app.groups().create(new GroupData("",
+                    "group name",
+                    "group header",
+                    "group footer"));
         }
         var group = app.hbm().getGroupList().get(0);
-
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contacts().create(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
