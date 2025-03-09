@@ -1,7 +1,11 @@
 package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,12 +27,25 @@ public class ContactHelper extends HelperBase {
         return manager.isElementPresent(By.name("selected[]"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         openContactsPage();
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
         returnToContactsPage();
+    }
+
+    public void create(ContactData contact, GroupData group) {
+        openContactsPage();
+        initContactCreation();
+        fillContactForm(contact);
+        selectGroup(group);
+        submitContactCreation();
+        returnToContactsPage();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
 
     private void initContactCreation() {
@@ -39,6 +56,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contact.firstName());
         type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
+        type(By.name("address"), contact.address());
         attach(By.name("photo"), contact.photo());
     }
 
@@ -108,11 +126,13 @@ public class ContactHelper extends HelperBase {
             var firstname = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
             var lastname = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
             var checkbox = row.findElement(By.name("selected[]"));
+            var address = row.findElement(By.cssSelector("td:nth-child(4)")).getText();
             var id = checkbox.getAttribute("id");
             contacts.add(new ContactData()
                     .withId(id)
                     .withFirstName(firstname)
                     .withLastName(lastname)
+                    .withAddress(address)
                     .withPhoto("src/test/resources/images/kid.png"));
         }
         return contacts;

@@ -75,6 +75,7 @@ public class Generator {
             result.add(new ContactData()
                     .withFirstName(CommonFunctions.randomString(i * 10))
                     .withLastName(CommonFunctions.randomString(i * 10))
+                    .withAddress(CommonFunctions.randomString(i * 10))
                     .withPhoto("src/test/resources/images/kid.png"));
 //                    .withPhoto(randomFile("src/test/resources/images")));     Отключил рандом для прохождения ассерта в тесте
         }

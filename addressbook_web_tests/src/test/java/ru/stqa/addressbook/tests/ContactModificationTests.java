@@ -12,10 +12,11 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact() {
        if (app.contacts().getCount() == 0) {
-           app.contacts().createContact(new ContactData("",
+           app.contacts().create(new ContactData("",
                    "First Name",
                    "Middle Name",
                    "Last Name",
+                   "Address",
                    "src/test/resources/images/kid.png"));
        }
        var oldContacts = app.contacts().getList();
@@ -25,13 +26,15 @@ public class ContactModificationTests extends TestBase {
                .withFirstName("modified first name")
                .withMiddleName("modified middle name")
                .withLastName("modified last name")
+               .withAddress("modified address")
                .withPhoto("src/test/resources/images/kid.png");
        app.contacts().modifyContact(oldContacts.get(index), testData);
        var newContacts = app.contacts().getList();
        var expectedList = new ArrayList<>(oldContacts);
        expectedList.set(index, testData
                .withId(oldContacts.get(index).id())
-               .withMiddleName(""));
+               .withMiddleName("")
+               .withAddress(""));
        Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
        };
