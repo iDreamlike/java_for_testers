@@ -44,8 +44,20 @@ public class ContactHelper extends HelperBase {
         returnToContactsPage();
     }
 
+    public void deleteFromGroup(GroupData group) {
+        openContactsPage();
+        selectGroupSort(group);
+        selectFirstContact();
+        pressRemoveButton();
+        returnToContactsPage();
+    }
+
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
+    private void selectGroupSort(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
     private void initContactCreation() {
@@ -83,6 +95,10 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector(String.format("input[id='%s']", contact.id())));
     }
 
+    private void selectFirstContact() {
+        click(By.cssSelector("input[type='checkbox']"));
+    }
+
     private void editContact(ContactData contact) {
         var rows = manager.driver.findElements(By.name("entry"));
         for (var row : rows) {
@@ -97,6 +113,10 @@ public class ContactHelper extends HelperBase {
 
     private void removeSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
+    }
+
+    private void pressRemoveButton() {
+        click(By.name("remove"));
     }
 
     public int getCount() {

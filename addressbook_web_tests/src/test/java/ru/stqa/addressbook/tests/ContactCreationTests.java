@@ -84,6 +84,34 @@ public class ContactCreationTests extends TestBase {
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contacts().create(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newRelated.sort(compareById);
+        var expectedList = new ArrayList<>(oldRelated);
+        expectedList.add(contact.withId(newRelated.get(newRelated.size() - 1).id()));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newRelated, expectedList);
+    }
+
+    @Test
+    void canDeleteContactFromGroup() {
+        if (app.hbm().getGroupCount() == 0) {
+            app.groups().create(new GroupData("",
+                    "group name",
+                    "group header",
+                    "group footer"));
+        }
+        var contact = new ContactData()
+                .withFirstName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(10))
+                .withAddress(CommonFunctions.randomString(10));
+        var group = app.hbm().getGroupList().get(0);
+        app.contacts().create(contact, group);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().deleteFromGroup(group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
 }
