@@ -80,9 +80,17 @@ public class ContactCreationTests extends TestBase {
                     "group header",
                     "group footer"));
         }
+        if (app.hbm().getContactCount() == 0) {
+            app.contacts().create(new ContactData("",
+                    "firstname",
+                    "middlename",
+                    "lastname",
+                    "address"));
+        }
         var group = app.hbm().getGroupList().get(0);
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().create(contact, group);
+        contact = app.hbm().getContactList().get(0);
+        app.contacts().addContactToGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
